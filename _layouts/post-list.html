@@ -12,6 +12,8 @@ layout: default
       </strong>
       <br/>
       <small>
+        <em>{{ post.excerpt }}</em>
+        <br/>
         <time datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date_to_long_string }}</time>
         {% if post.tags %}
         --
