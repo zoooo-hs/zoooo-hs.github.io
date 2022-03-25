@@ -15,7 +15,7 @@ tags: [Spring Boot, AWS, Elastic Beanstalk, Cloud, Deployment]
 
 # 들어가기 앞서
 - 본 내용은 시행착오 과정도 포함하고 있어, 무작정 따라가기만 하면 같은 문제를 만날 수도 있습니다.
-- [시리즈에 사용된 소스 코드](https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/tree/main/eb-test)
+- [시리즈에 사용된 소스 코드](https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/tree/main/2022-03-25-eb-test)
 
 # Elastic Beanstalk(이하 eb) Console
 - [AWS Management Console](https://aws.amazon.com/ko/console/)에서 Elastic Beanstalk을 검색하여 해당 관리 콘솔로 이동한다.

@@ -14,7 +14,7 @@ tags: [JPA, Java, Spring Data JPA, Hibernate]
 {:toc}
 
 # 앞서
-- [시리즈에 사용된 소스코드](https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/tree/main/jpa_cascade_orphan_removal)
+- [시리즈에 사용된 소스코드](https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/tree/main/2022-03-18-jpa_cascade_orphan_removal)
 - [1부로 이동](/2022/03/11/JPA-Entity-cascade=REMOVE,-orphanRemoval=true-왜-헷갈렸을까-1.html)
 
 ## 이전 내용
@@ -28,7 +28,7 @@ tags: [JPA, Java, Spring Data JPA, Hibernate]
 # cascade=REMOVE
 
 ```java
-// https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/blob/ed9212a4cf42097cd609bb2f66556102cd382414/jpa_cascade_orphan_removal/src/main/java/io/github/zoooohs/entity/cascade/Post.java#L24
+// /src/main/java/io/github/zoooohs/entity/cascade/Post.java#L24
 
 @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 private List<Comment> comments = new ArrayList<>();
@@ -44,7 +44,7 @@ cascade는 폭포라는 뜻의 영어단어인데, 폭포처럼 떨어진다는 
 연결 대상에 단계적으로 작업이 전달된다고 한다. 그렇기 때문에 cascade=REMOVE는 삭제 작업이 단계적으로 전달된다.
 
 ```java
-// https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/blob/ed9212a4cf42097cd609bb2f66556102cd382414/jpa_cascade_orphan_removal/src/test/java/io/github/zoooohs/entity/cascade/CascadeTest.java#L38
+// /src/test/java/io/github/zoooohs/entity/cascade/CascadeTest.java#L38
 
 entityManager.remove(post);
 entityManager.flush();
@@ -56,7 +56,7 @@ Assertions.assertNull(actual);
 # orphanRemoval=true
 
 ```java
-// https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/blob/ed9212a4cf42097cd609bb2f66556102cd382414/jpa_cascade_orphan_removal/src/main/java/io/github/zoooohs/entity/orphan/Post.java#L24
+// /src/main/java/io/github/zoooohs/entity/orphan/Post.java#L24
 
 @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, orphanRemoval = true)
 private Collection<Comment> comments = new ArrayList<>();
@@ -65,7 +65,6 @@ private Collection<Comment> comments = new ArrayList<>();
 orphan은 고아라는 뜻인데, JPA에선 부모-자식 관계의 엔티티가 있을 때 부모와의 관계가 끊어진 자식 엔티티를 고아라고 한다. orphanRemoval=true 옵션을 쓰게 되면 이러한 고아가 발생했을 때 해당 엔티티에 대해 계단식 제거를 한다.
 
 > Whether to apply the remove operation to entities that have been removed from the relationship and to cascade the remove operation to those entities. - hibernate-jpa-2.0-api
-> 
 
 
 여기서 관계를 갖는 것과 끊는 것에 대한 의미가 모호할 수 있다. 객체의 필드로 다른 객체를 갖고 있다면, 두 객체 간 연관 관계가 있다고 볼 수 있다. 일대다 관계를 JPA 엔티티로 구현할 때 부모 엔티티 필드 중 OneToMany 어노테이션의 Collection 필드로 여러 자식 엔티티와 연관 관계를 갖고, 자식 엔티티 필드 중 ManyToOne 어노테이션으로 부모 엔티티 필드로 하나의 부모와의 연관 관계를 맺을 수 있다.
@@ -75,7 +74,7 @@ orphan은 고아라는 뜻인데, JPA에선 부모-자식 관계의 엔티티가
 단순히 필드를 선언하는 거로 관계를 갖는 게 아니라, 실제로 필드에 해당 객체 값이 있어야 관계를 갖는데, 다음과 같이 추가가 가능하다.
 
 ```java
-// https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/blob/ed9212a4cf42097cd609bb2f66556102cd382414/jpa_cascade_orphan_removal/src/test/java/io/github/zoooohs/entity/cascade/CascadeTest.java#L25
+// /src/test/java/io/github/zoooohs/entity/cascade/CascadeTest.java#L25
 
 // 게시글 작성
 Post post = Post.builder().content("오늘은 날씨가 좋다.").build();
@@ -88,7 +87,7 @@ entityManager.persist(comment);
 ```
 관계를 끊는 것은 반대로 객체 값을 지워 객체 간 참조 가능한 연결이 없도록 하는 것이다. orphanRemoval을 발동시키기 위해서는 부모 엔티티에서 자식 엔티티와의 관계를 끊어야 하는데, Collection에서 자식 엔티티를 삭제하는 것으로 관계를 지울 수 있다.
 ```java
-// https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/blob/ed9212a4cf42097cd609bb2f66556102cd382414/jpa_cascade_orphan_removal/src/test/java/io/github/zoooohs/entity/orphan/OrphanRemovalTest.java#L38
+// /src/test/java/io/github/zoooohs/entity/orphan/OrphanRemovalTest.java#L38
 
 post.getComments().clear();
 entityManager.flush();
@@ -101,7 +100,7 @@ Assertions.assertNull(actual);
 끝으로 부모 엔티티를 삭제하는 행위도 자식 엔티티와의 관계를 끊는 행위가 되기 때문에 orphanRemoval을 통해 자식 엔티티를 단계적으로 삭제 할 수 있다. 이는 cascade=REMOVE와 같은 결과를 보인다.
 
 ```java
-// https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/blob/ed9212a4cf42097cd609bb2f66556102cd382414/jpa_cascade_orphan_removal/src/test/java/io/github/zoooohs/entity/cascade/CascadeTest.java#L37
+// /src/test/java/io/github/zoooohs/entity/cascade/CascadeTest.java#L37
 
 entityManager.remove(post);
 entityManager.flush();
