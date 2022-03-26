@@ -17,6 +17,21 @@ tags: [Spring Boot, AWS, Elastic Beanstalk, Cloud, Deployment]
 - 본 내용은 시행착오 과정도 포함하고 있어, 무작정 따라가기만 하면 같은 문제를 만날 수도 있습니다.
 - [시리즈에 사용된 소스 코드](https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/tree/main/2022-03-25-eb-test)
 
+# 테스트 프로젝트
+본 글에서는 GET /hello 요청이 오면 "Hello World" 문자열을 반환하는 API 앱을 만들고 AWS Elastic Beanstalk으로 배포한다. 이를 위한 Spring Boot 프로젝트를 하나 만들고 다음과 같은 컨트롤러를 추가한다.
+```java
+@RestController
+public class HelloController {
+    @GetMapping("/hello")
+    public String helloWorld() {
+        return "Hello World";
+    }
+}
+```
+
+
+
+
 # Elastic Beanstalk(이하 eb) Console
 - [AWS Management Console](https://aws.amazon.com/ko/console/)에서 Elastic Beanstalk을 검색하여 해당 관리 콘솔로 이동한다.
 
@@ -117,15 +132,15 @@ public class HealthController {
 ![get / 200 log](/assets/img/20220325/eb-deploy-13.png)
 
 ## 그럼 GET / 요청은 무조건 health check로 사용해야 하나요?
-그렇지 않습니다. 로드밸런서 설정에서 health check URL을 변경할 수 있습니다.
-- 먼저 ec2 콘솔에서 로드밸런서항목 중 대상 그룹을 선택합니다.
+그렇지 않다. 로드밸런서 설정에서 health check URL을 변경할 수 있다.
+- 먼저 ec2 콘솔에서 로드밸런서항목 중 대상 그룹을 선택한다.
 ![ec2 target group](/assets/img/20220325/eb-deploy-14.png)
 
 [대상 그룹](https://docs.aws.amazon.com/ko_kr/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-type)은 로드밸런서에서 부하를 전달하는 대상을 말하는데, AWS 람다, 인스턴스, IP 등이 있다. eb 환경을 생성할때 ec2 인스턴스와 해당 인스턴스를 대상 그룹으로 부하를 전달하는 로드밸런서가 생성되는데, 우리는 해당 타겟 그룹의 health check 설정을 바꿔줘야 한다.
 
 
 
-위 그림과 같이 검색란에서 우리가 만든 환경의 이름을 입력해 필터링하고, 대상 그룹을 선택합니다.
+위 그림과 같이 검색란에서 우리가 만든 환경의 이름을 입력해 필터링하고, 대상 그룹을 선택한다.
 
 - 중간에 있는 탭 메뉴 중 Health Check를 선택하면 Path가 /로 지정되어 있는걸 볼 수 있다. Edit을 선택하여 편집
 ![ec2 target group setup](/assets/img/20220325/eb-deploy-15.png)
