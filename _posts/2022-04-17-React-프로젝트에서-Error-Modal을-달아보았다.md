@@ -2,7 +2,7 @@
 layout: post
 title:  "React 프로젝트에서 Error Modal을 달아보았다"
 excerpt: "React 프로젝트에서 Error Modal을 달아보았다. 그런데 Redux를 이용한 상태관리를 곁들인."
-date: "2022-04-02"
+date: "2022-04-17"
 
 author: zoooo-hs
 tags: [React, Redux, Frontend, Web]
