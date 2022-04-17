@@ -15,7 +15,7 @@ tags: [Spring Boot, AWS, Elastic Beanstalk, Cloud, Deployment]
 
 # 들어가기 앞서
 - 본 내용은 시행착오 과정도 포함하고 있어, 무작정 따라가기만 하면 같은 문제를 만날 수도 있습니다.
-- [시리즈에 사용된 소스 코드](https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/tree/main/2022-03-25-eb-test)
+- [게시글에 사용된 소스 코드](https://github.com/zoooo-hs/zoooo-hs.github.io-source-codes/tree/main/2022-03-25-eb-test)
 
 # 테스트 프로젝트
 본 글에서는 GET /hello 요청이 오면 "Hello World" 문자열을 반환하는 API 앱을 만들고 AWS Elastic Beanstalk으로 배포한다. 이를 위한 Spring Boot 프로젝트를 하나 만들고 다음과 같은 컨트롤러를 추가한다.
