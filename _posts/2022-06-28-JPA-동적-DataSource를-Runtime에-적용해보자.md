@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "JPA 동적 DataSoruce를 Runtime에 적용해보자"
+title:  "JPA 동적 DataSource를 Runtime에 적용해보자"
 excerpt: "EntityManagerFactory를 통해 적용가능하다."
 date: "2022-06-28"
 
@@ -35,7 +35,7 @@ JPA Dynamic DataSource, JPA Change DataSource 등 JPA 를 사용하는 환경에
 private LocalContainerEntityManagerFactoryBean productEntityManager(DataSource dataSource) {
 	LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 	
-	**em.setDataSource(dataSource);**
+	em.setDataSource(dataSource); // 핵심
 	
 	em.setPackagesToScan(new String[] { "com.base.pakcage.for.entity" });
 	HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
